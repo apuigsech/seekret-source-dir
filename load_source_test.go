@@ -64,3 +64,13 @@ func TestLoadObjectsFromTwoLevelDirectoryThatContainsTwoFilesReturnsTwoObjectsIf
 	assert.NotEmpty(t, objectList, "ObjectList should not be empty")
 	assert.Len(t, objectList, 2, "Two objects should be present")
 }
+
+func TestLoadObjectsFromInvalidDirectoryShouldReturnAnError(t *testing.T) {
+	sourceDir := SourceDir{}
+	loadOptions := seekret.LoadOptions{}
+
+	objectList, err := sourceDir.LoadObjects("./fixtures/invalid", loadOptions)
+
+	assert.NotNil(t, err, "Error should be nil")
+	assert.Empty(t, objectList, "ObjectList should be empty")
+}

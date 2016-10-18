@@ -46,7 +46,11 @@ func (s *SourceDir) LoadObjects(source string, opta seekret.LoadOptions) ([]mode
 
 	firstPath := true
 
-	filepath.Walk(source, func(path string, fi os.FileInfo, err error) error {
+	err := filepath.Walk(source, func(path string, fi os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
 		if fi.IsDir() {
 			if firstPath {
 				firstPath = false
@@ -81,6 +85,10 @@ func (s *SourceDir) LoadObjects(source string, opta seekret.LoadOptions) ([]mode
 
 		return nil
 	})
+
+	if err != nil {
+		return objectList, err
+	}
 
 	return objectList, nil
 }
