@@ -1,13 +1,13 @@
-package sourcedir 
+package sourcedir
 
 import (
 	"fmt"
+	"github.com/apuigsech/seekret"
+	"github.com/apuigsech/seekret/models"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
-	"github.com/apuigsech/seekret"
-	"github.com/apuigsech/seekret/models"
 )
 
 var (
@@ -60,19 +60,19 @@ func (s *SourceDir) LoadObjects(source string, opta seekret.LoadOptions) ([]mode
 				return filepath.SkipDir
 			}
 		} else {
-			if !strings.HasPrefix(filepath.Base(path), ".") || (strings.HasPrefix(filepath.Base(path), ".")  && opt.Hidden) {
+			if !strings.HasPrefix(filepath.Base(path), ".") || (strings.HasPrefix(filepath.Base(path), ".") && opt.Hidden) {
 				f, err := os.Open(path)
 				if err != nil {
 					return err
 				}
-				
+
 				content, err := ioutil.ReadAll(f)
 				if err != nil {
 					return err
 				}
 
 				o := models.NewObject(path, content)
-		
+
 				objectList = append(objectList, *o)
 
 				f.Close()
